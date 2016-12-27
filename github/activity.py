@@ -1,8 +1,8 @@
 from datetime import datetime
 
-import iso8601
 import requests as r
 
+from github.event import Event
 from util.config import parse_config
 from util.constant import *
 
@@ -32,15 +32,16 @@ def get_activity_user(username=config_dict[USERNAME],
     head = r.head(url=endpoint, headers=headers)
     response = r.get(url=endpoint, headers=headers).json()
     while (response):
-        for event in response:
-            if (CREATED_AT in event):
-                created_at = iso8601.parse_date(event[CREATED_AT]).timestamp()
+        for _event in response:
+            event = Event(event)
+            try:
+                created_at = event.created_at()
                 if (created_at < since_date):
                     return
                 else:
                     yield event
-            else:
-                raise ValueError("Could not figure out the created_at time from the event object")
+            except ValueError as e:
+                pass
         if (NEXT in head.links):
             endpoint = head.links[NEXT][URL]
             response = r.get(url=endpoint, headers=headers).json()
@@ -56,8 +57,15 @@ def get_commits_user(username=config_dict[USERNAME],
     '''Method to get all the commits of an user on github since `since_date`.
     Refer get_activity_user method for limits in number of commits that can be retrived.'''
     return filter(
-        lambda event: event[TYPE] == PUSHEVENT, get_activity_user(username,
-                                                                  since_date,
-                                                                  client_id,
-                                                                  client_secret)
+        lambda event: event.check_event_type(PUSHEVENT), get_activity_user(username,
+                                                                           since_date,
+                                                                           client_id,
+                                                                           client_secret)
     )
+
+
+for i in get_commits_user(username=config_dict[USERNAME],
+                          since_date=datetime.now().timestamp() - 604800,
+                          client_id=config_dict[CLIENT_ID],
+                          client_secret=config_dict[CLIENT_SECRET]):
+    print(i['repo']['name'])
