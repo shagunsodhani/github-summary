@@ -49,3 +49,15 @@ def get_activity_user(username=config_dict[USERNAME],
             return
 
 
+def get_commits_user(username=config_dict[USERNAME],
+                     since_date=datetime.now().timestamp() - 604800,
+                     client_id=config_dict[CLIENT_ID],
+                     client_secret=config_dict[CLIENT_SECRET]):
+    '''Method to get all the commits of an user on github since `since_date`.
+    Refer get_activity_user method for limits in number of commits that can be retrived.'''
+    return filter(
+        lambda event: event[TYPE] == PUSHEVENT, get_activity_user(username,
+                                                                  since_date,
+                                                                  client_id,
+                                                                  client_secret)
+    )
