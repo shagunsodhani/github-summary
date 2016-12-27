@@ -81,7 +81,3 @@ def summarise_commits(config_dict):
                                        enumerate(repo_dict[repo_name], start=1))) + "\n"
 
         print(string_to_print)
-
-
-config_dict[SINCEDATE] = datetime.now().timestamp() - 604800
-summarise_commits(config_dict)
