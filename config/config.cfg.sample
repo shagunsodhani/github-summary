@@ -3,3 +3,4 @@ base_url = https://api.github.com
 username = shagunsodhani
 client_id =
 client_secret =
+lookback_time = 604800
