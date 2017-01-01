@@ -1,4 +1,3 @@
-from datetime import datetime
 from functools import reduce
 
 import requests as r
@@ -25,11 +24,15 @@ def get_activity_user(config_dict):
     since_date = config_dict[SINCEDATE]
     client_id = config_dict[CLIENT_ID]
     client_secret = config_dict[CLIENT_SECRET]
-    endpoint = "{base_url}/users/{username}/events?client_id={client_id}" \
-               "&client_secret={client_secret}".format(base_url=base_url,
-                                                       username=username,
-                                                       client_id=client_id,
-                                                       client_secret=client_secret)
+    if (client_secret and client_id):
+        endpoint = "{base_url}/users/{username}/events?client_id={client_id}" \
+                   "&client_secret={client_secret}".format(base_url=base_url,
+                                                           username=username,
+                                                           client_id=client_id,
+                                                           client_secret=client_secret)
+    else:
+        endpoint = "{base_url}/users/{username}/events".format(base_url=base_url,
+                                                               username=username)
     head = r.head(url=endpoint, headers=headers)
     response = r.get(url=endpoint, headers=headers).json()
     while (response):
