@@ -1,5 +1,5 @@
 [github]
-base_url =
-username =
+base_url = https://api.github.com
+username = shagunsodhani
 client_id =
 client_secret =
