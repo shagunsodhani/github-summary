@@ -24,12 +24,18 @@ def get_activity_user(config_dict):
     since_date = config_dict[SINCEDATE]
     client_id = config_dict[CLIENT_ID]
     client_secret = config_dict[CLIENT_SECRET]
+    access_token = config_dict[ACCESS_TOKEN]
     if (client_secret and client_id):
         endpoint = "{base_url}/users/{username}/events?client_id={client_id}" \
                    "&client_secret={client_secret}".format(base_url=base_url,
                                                            username=username,
                                                            client_id=client_id,
                                                            client_secret=client_secret)
+    elif (access_token):
+        endpoint = "{base_url}/users/{username}/events?access_token={access_token}" \
+            .format(base_url=base_url,
+                    username=username,
+                    access_token=access_token)
     else:
         endpoint = "{base_url}/users/{username}/events".format(base_url=base_url,
                                                                username=username)

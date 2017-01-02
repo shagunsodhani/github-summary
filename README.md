@@ -11,7 +11,7 @@ Tool to generate (weekly) summary of work done on
 
 * `base_url` - URL for accessing the github api. `https://api.github.com` for github.com.
 * `username` - user for whom the commits are to be collected.
-* `client_id` and `client_secret` may be created at [https://github.com/settings/tokens](https://github.com/settings/tokens). They may also be left blank in which case unauthenticated requests will be made to github api which are rate limited and will not fetch commits from private repos. Further, enterprise github installations may only support authenticated requests.
+* `client_id` and `client_secret` may be created at [https://github.com/settings/developers](https://github.com/settings/developers) while `access_token` maybe created at [https://github.com/settings/tokens](https://github.com/settings/tokens). For making authenticated requests, either populate `client_id` and `client_secret` or populate `access_token`. They may also be left blank in which case unauthenticated requests will be made to github api which are rate limited and will not fetch commits from private repos. Further, enterprise github installations may only support authenticated requests.
 * `lookback_time` - number of seconds to lookback since the current time when retriving commits. For example, `lookback_time=604800` means commits older than 604800 seconds (604800 = 60*60*24*7) or 7 days will not be retrived.
 
 ## To change the output format

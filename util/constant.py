@@ -1,3 +1,4 @@
+ACCESS_TOKEN = "access_token"
 BASE_URL = "base_url"
 CLIENT_ID = "client_id"
 CLIENT_SECRET = "client_secret"
