@@ -78,11 +78,11 @@ def summarise_commits(config_dict):
         for commit in event.get_distinct_commits():
             # string_to_insert = "Commit Message = {commit_message}\nCommit URL = {commit_url}" \
             #     .format(commit_message=commit.get_message(), commit_url=commit.get_url())
-            string_to_insert = "{commit_message}\t\t{commit_url}" \
-                .format(commit_message=commit.get_message(), commit_url=commit.get_url())
+            string_to_insert = "{commit_sha} - {commit_message}" \
+                .format(commit_message=commit.get_message(), commit_sha=commit.get_sha())
             repo_dict[repo_name].append(string_to_insert)
     for repo_name in repo_dict:
-        string_to_print = "In repo {repo_name}:\n" \
+        string_to_print = "In repo {repo_name}:\n\n" \
                               .format(repo_name=repo_name) \
                           + reduce(lambda str1, str2: str1 + "\n" + str2,
                                    map(lambda index_str_tuple:

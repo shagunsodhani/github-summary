@@ -15,6 +15,9 @@ class Commit:
     def get_message(self):
         return self.commit_dict['message']
 
+    def get_sha(self):
+        return self.commit_dict['sha']
+
     def get_url(self):
         return self.commit_dict['url']\
             .replace('api.', '')\
@@ -41,7 +44,12 @@ class Event:
 
     def get_repo_name(self):
         '''Method to return the repo name'''
-        return self.event_dict[REPO][NAME]
+        return self.event_dict[REPO][URL]\
+            .replace('api.', '')\
+            .replace('repos/', '')\
+            .replace('https://', '')\
+            .replace('http://', '')
+
 
     def get_distinct_commits(self):
         '''Method to return a list of commits belonging to the event.'''

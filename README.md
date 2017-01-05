@@ -26,28 +26,21 @@ Everyone in my team has to write a weekly update describing the different tasks 
 
 ```
 
-In repo shagunsodhani/github-summary:
-1: Make unauthenticated request to github API in case client_id or client_secret is missing        https://github.com/shagunsodhani/github-summary/commit/5cacfd4570702db3e46932a3e739188842424601
-2: Added demo values to the sample config and added setup script        https://github.com/shagunsodhani/github-summary/commit/10d0f11057ec9da7c6df5db039e00caa715cbfe6
-3: updated README        https://github.com/shagunsodhani/github-summary/commit/6213f1b4dc73450906ba3b5355a95593db3ee5a5
-4: Added main.py        https://github.com/shagunsodhani/github-summary/commit/fbb08e5d30519f340c109b178f1b1f1fef1e4f97
-5: renamed github.py as activity.py        https://github.com/shagunsodhani/github-summary/commit/87777c618fd44a1955c885444b3bd6b60c07a86f
-6: added placeholder method to generate summary of commits and using config dict to pass around params        https://github.com/shagunsodhani/github-summary/commit/9039df13e8dc4dfbe298660657ed8adb28af9514
-7: Added class to handle events returned by github API        https://github.com/shagunsodhani/github-summary/commit/c1ec78a4c80bba9115c74a2bbdb6dbc5fad7927d
-8: Added commit class        https://github.com/shagunsodhani/github-summary/commit/321a77ada28ab66774e74df4b8b9541c1eea491d
-9: completed method to generate summary for commits in last one week.        https://github.com/shagunsodhani/github-summary/commit/3194da7aa67a4ab49f56096cefd46a230bc706b5
-10: added .idea and config to gitignore        https://github.com/shagunsodhani/github-summary/commit/f87818793ef906c4ec54a33fa83adceffecdeeb5
-11: Added sample config file        https://github.com/shagunsodhani/github-summary/commit/a01b92f757802bdee6bfafae91d24acb1d77e647
-12: added method to obtain all events since a given date        https://github.com/shagunsodhani/github-summary/commit/d46e747617bb915ea9653fb30f229b646d2046ac
-13: added method to obtain all user commits since a given date        https://github.com/shagunsodhani/github-summary/commit/97593bae00ed7c273f3ebb9bdf5e534fa16947d3
-14: Added utility package with config parser and constants file        https://github.com/shagunsodhani/github-summary/commit/8cca28dc0a2c5df0e05cf7aa93dad6d5fd1401d4
+In repo github.com/shagunsodhani/citadel:
 
-In repo shagunsodhani/papers-I-read:
-1: Added Open Vocabulary NMT paper        https://github.com/shagunsodhani/papers-I-read/commit/63b7cd141ebd95768b94f7ae62866703c8f01091
-2: Added RNTN paper        https://github.com/shagunsodhani/papers-I-read/commit/d3eaf079b3c59a8dc4a7dbad58fbfbf69ee33367
-3: Added images from RNTN paper        https://github.com/shagunsodhani/papers-I-read/commit/cb31fe3f638f893f0cae8dfd7cd756d85be56346
+1: 4fb6f09f36fb05884cd0b352c09b21e4d7f45263 - Added GAN links
+2: 97fdefc7176fa52edc94ee9c57f572f0befd4b24 - Added link for tensorflow debugging
 
-In repo shagunsodhani/citadel:
-1: Added link for tensorflow debugging        https://github.com/shagunsodhani/citadel/commit/97fdefc7176fa52edc94ee9c57f572f0befd4b24
+In repo github.com/shagunsodhani/github-summary:
+
+1: 1323b5e55e95522ed1c556ef8efd9515e6013a08 - Added support for access_tokens
+2: ad46b38a011239309ef6bdcfb9a3208a6a84f576 - Added a parameter in the config to control how much older commits are retrived
+3: be4cda323349f02cccc4effc5ec304dcf745a328 - Added instructions to setup and use. Fixes #1
+4: 5cacfd4570702db3e46932a3e739188842424601 - Make unauthenticated request to github API in case client_id or client_secret is missing
+5: 10d0f11057ec9da7c6df5db039e00caa715cbfe6 - Added demo values to the sample config and added setup script
+
+In repo github.com/shagunsodhani/papers-I-read:
+
+1: 63b7cd141ebd95768b94f7ae62866703c8f01091 - Added Open Vocabulary NMT paper
 
 ```
