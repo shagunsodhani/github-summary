@@ -14,11 +14,11 @@ Tool to generate (weekly) summary of work done on
 * `client_id` and `client_secret` may be created at [https://github.com/settings/developers](https://github.com/settings/developers) while `access_token` maybe created at [https://github.com/settings/tokens](https://github.com/settings/tokens). For making authenticated requests, either populate `client_id` and `client_secret` or populate `access_token`. They may also be left blank in which case unauthenticated requests will be made to github api which are rate limited and will not fetch commits from private repos. Further, enterprise github installations may only support authenticated requests.
 * `lookback_time` - How much time to look back since the current time when retriving commits. 
 Supported values:
-	* <num>s - commits older than <num> seconds.
-	* <num>m - commits older than <num> minutes.
-	* <num>h - commits older than <num> hours.
-	* <num>d - commits older than <num> days.
-	* <num>w - commits older than <num> weeks.
+	* *num*s - commits older than *num* seconds.
+	* *num*m - commits older than *num* minutes.
+	* *num*h - commits older than *num* hours.
+	* *num*d - commits older than *num* days.
+	* *num*w - commits older than *num* weeks.
 For example, `lookback_time=7d` means commits older than 7 days will not be retrived.
 
 ## To change the output format
