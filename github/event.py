@@ -10,19 +10,19 @@ class Commit:
         self.commit_dict = commit_dict
 
     def is_distinct(self):
-        return self.commit_dict['distinct']
+        return self.commit_dict[DISTINCT]
 
     def get_message(self):
-        return self.commit_dict['message']
+        return self.commit_dict[MESSAGE]
 
     def get_sha(self):
-        return self.commit_dict['sha']
+        return self.commit_dict[SHA]
 
     def get_url(self):
-        return self.commit_dict['url']\
-            .replace('api.', '')\
-            .replace('repos/', '')\
-            .replace('commits', 'commit')
+        return self.commit_dict[URL] \
+            .replace(APIDOT, EMPTYSTRING) \
+            .replace(REPOSSLASH, EMPTYSTRING) \
+            .replace(COMMITS, COMMIT)
 
 
 class Event:
@@ -44,18 +44,17 @@ class Event:
 
     def get_repo_name(self):
         '''Method to return the repo name'''
-        return self.event_dict[REPO][URL]\
-            .replace('api.', '')\
-            .replace('repos/', '')\
-            .replace('https://', '')\
-            .replace('http://', '')
-
+        return self.event_dict[REPO][URL] \
+            .replace(APIDOT, EMPTYSTRING) \
+            .replace(REPOSSLASH, EMPTYSTRING) \
+            .replace(HTTPS, EMPTYSTRING) \
+            .replace(HTTP, EMPTYSTRING)
 
     def get_distinct_commits(self):
         '''Method to return a list of commits belonging to the event.'''
-        if 'commits' in self.event_dict['payload']:
+        if COMMITS in self.event_dict[PAYLOAD]:
             return (filter
                     (lambda commit: commit.is_distinct(),
                      map(lambda commit: Commit(commit),
-                         self.event_dict['payload']['commits'])))
+                         self.event_dict[PAYLOAD][COMMITS])))
             return
