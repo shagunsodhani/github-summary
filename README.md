@@ -5,20 +5,23 @@ Tool to generate (weekly) summary of work done on
 
 * Run `./setup.sh`
 * Update the config values in `config/config.cfg`. The meaning of config parameters is explained below.
-* Run `python3 main.py` to obtain commits for past one week. 
+* Run `python3 main.py` to obtain commits for past one week.
+* There are two ways for specifying how much time to look back since the current time when retriving commits:
+    * Commandline option - `python3 main.py -t *lookback_time*`. The supported formats are discussed under `lookback_time`[here](README.md#config-parameters)
+    * Setting as a config parameter - discussed under `lookback_time`[here](README.md#config-parameters)
 
 ## Config Parameters
 
 * `base_url` - URL for accessing the github api. `https://api.github.com` for github.com.
 * `username` - user for whom the commits are to be collected.
 * `client_id` and `client_secret` may be created at [https://github.com/settings/developers](https://github.com/settings/developers) while `access_token` maybe created at [https://github.com/settings/tokens](https://github.com/settings/tokens). For making authenticated requests, either populate `client_id` and `client_secret` or populate `access_token`. They may also be left blank in which case unauthenticated requests will be made to github api which are rate limited and will not fetch commits from private repos. Further, enterprise github installations may only support authenticated requests.
-* `lookback_time` - How much time to look back since the current time when retriving commits. 
+* `lookback_time` - How much time to look back since the current time when retriving commits.
 Supported values:
-	* *num*s - commits older than *num* seconds.
-	* *num*m - commits older than *num* minutes.
-	* *num*h - commits older than *num* hours.
-	* *num*d - commits older than *num* days.
-	* *num*w - commits older than *num* weeks.
+	* **n**s - commits older than **n** seconds.
+	* **n**m - commits older than **n** minutes.
+	* **n**h - commits older than **n** hours.
+	* **n**d - commits older than **n** days.
+	* **n**w - commits older than **n** weeks.
 For example, `lookback_time=7d` means commits older than 7 days will not be retrived.
 
 ## To change the output format
