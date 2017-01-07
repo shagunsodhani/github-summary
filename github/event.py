@@ -1,3 +1,6 @@
+import re
+from functools import reduce
+
 import iso8601
 
 from util.constant import *
@@ -12,8 +15,25 @@ class Commit:
     def is_distinct(self):
         return self.commit_dict[DISTINCT]
 
+    def is_merge_commit(self):
+        return self.get_message().startswith("Merge pull request") \
+               or self.get_message().startswith("Merge branch")
+
     def get_message(self):
         return self.commit_dict[MESSAGE]
+
+    def get_formatted_message(self):
+        def format_line(_line):
+            line = _line
+            if (_line[0].islower()):
+                line = _line[0].upper() + line[1:]
+            if _line[-1] == DOT:
+                line += DOT
+            return line
+
+        return reduce(lambda str1, str2: str1 + ". " + str2,
+                      map(lambda line: format_line(line),
+                          re.sub('\n+', '\n', self.get_message()).split('\n')))
 
     def get_sha(self):
         return self.commit_dict[SHA]
@@ -54,7 +74,6 @@ class Event:
         '''Method to return a list of commits belonging to the event.'''
         if COMMITS in self.event_dict[PAYLOAD]:
             return (filter
-                    (lambda commit: commit.is_distinct(),
+                    (lambda commit: commit.is_distinct() and not commit.is_merge_commit(),
                      map(lambda commit: Commit(commit),
                          self.event_dict[PAYLOAD][COMMITS])))
-            return
