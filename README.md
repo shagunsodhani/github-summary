@@ -26,7 +26,7 @@ Supported values:
 	* **n**d - commits older than **n** days.
 	* **n**w - commits older than **n** weeks.
 For example, `lookback_time=7d` means commits older than 7 days will not be retrived.
-* `group_by* - How to group the list of commits.
+* `group_by` - How to group the list of commits.
 Supported values:
 	* **r** - group commits by repo.
 	* **rd** - group commits by repo and then by date.
