@@ -5,6 +5,7 @@ import requests as r
 from github.event import Event
 from util.config import parse_config
 from util.constant import *
+from util.helper import timestamp_to_formatted_date
 
 config_dict = parse_config(app_name=GITHUB)
 base_url = config_dict[BASE_URL]
@@ -70,23 +71,93 @@ def get_commits_user(config_dict):
 
 def summarise_commits(config_dict):
     '''Method to summarise the commits since `since_date`.'''
-    repo_dict = {}
+    commit_list = []
     for event in get_commits_user(config_dict):
         repo_name = event.get_repo_name()
-        if repo_name not in repo_dict:
-            repo_dict[repo_name] = []
+        created_date_timestamp = event.created_date_timestamp()
         for commit in event.get_distinct_commits():
-            # string_to_insert = "Commit Message = {commit_message}\nCommit URL = {commit_url}" \
-            #     .format(commit_message=commit.get_message(), commit_url=commit.get_url())
             string_to_insert = "{commit_sha} - {commit_message}" \
                 .format(commit_message=commit.get_formatted_message(), commit_sha=commit.get_sha())
-            repo_dict[repo_name].append(string_to_insert)
-    for repo_name in sorted(repo_dict.keys()):
-        string_to_print = "In repo {repo_name}:\n\n" \
-                              .format(repo_name=repo_name) \
-                          + reduce(lambda str1, str2: str1 + "\n" + str2,
-                                   map(lambda index_str_tuple:
-                                       str(index_str_tuple[0]) + ": " + index_str_tuple[1],
-                                       enumerate(repo_dict[repo_name], start=1))) + "\n"
+            commit_list.append((repo_name, created_date_timestamp, string_to_insert))
 
+    if (config_dict[GROUPY_BY] == 'rd'):
+        _summarise_commits_grouped_by_repo_and_date(commit_list)
+    elif (config_dict[GROUPY_BY] == 'dr'):
+        _summarise_commits_grouped_by_date_and_repo(commit_list)
+    else:
+        _summarise_commits_grouped_by_repo(commit_list)
+
+
+def _summarise_commits_grouped_by_repo(commit_list):
+    '''Method to group commits by repo and summarise them'''
+    data_dict = {}
+    for (repo_name, _, string_to_insert) in commit_list:
+        if (repo_name not in data_dict):
+            data_dict[repo_name] = []
+        data_dict[repo_name].append(string_to_insert)
+    for repo_name in sorted(data_dict.keys()):
+        print_commit_list(data_dict[repo_name], repo_name, created_date_timestamp=None)
+        print("=============================================================================\n")
+
+
+def _summarise_commits_grouped_by_repo_and_date(commit_list):
+    '''Method to group commits by repo (and then date) and summarise them'''
+    data_dict = {}
+    for (repo_name, created_date_timestamp, string_to_insert) in commit_list:
+        if (repo_name not in data_dict):
+            data_dict[repo_name] = {}
+        if (created_date_timestamp not in data_dict[repo_name]):
+            data_dict[repo_name][created_date_timestamp] = []
+        data_dict[repo_name][created_date_timestamp].append(string_to_insert)
+    for repo_name in sorted(data_dict.keys()):
+        string_to_print = "In repo {repo_name}:\n\n" \
+            .format(repo_name=repo_name)
         print(string_to_print)
+        for created_date_timestamp in data_dict[repo_name]:
+            print_commit_list(data_dict[repo_name][created_date_timestamp],
+                              repo_name=None,
+                              created_date_timestamp=created_date_timestamp,
+                              prefix_commit_string="\t")
+        print("=============================================================================\n")
+
+
+def _summarise_commits_grouped_by_date_and_repo(commit_list):
+    '''Method to group commits by date (and then by repo) and summarise them'''
+    data_dict = {}
+
+    for (repo_name, created_date_timestamp, string_to_insert) in commit_list:
+        if (created_date_timestamp not in data_dict):
+            data_dict[created_date_timestamp] = {}
+        if (repo_name not in data_dict[created_date_timestamp]):
+            data_dict[created_date_timestamp][repo_name] = []
+        data_dict[created_date_timestamp][repo_name].append(string_to_insert)
+    for created_date_timestamp in sorted(data_dict.keys()):
+        string_to_print = \
+            "{created_date}:\n\n" \
+                .format(created_date=timestamp_to_formatted_date(created_date_timestamp))
+        print(string_to_print)
+        for repo_name in sorted(data_dict[created_date_timestamp].keys()):
+            print_commit_list(data_dict[created_date_timestamp][repo_name],
+                              repo_name=repo_name,
+                              created_date_timestamp=None,
+                              prefix_commit_string="\t")
+        print("=============================================================================\n")
+
+
+def print_commit_list(commit_list,
+                      repo_name=None,
+                      created_date_timestamp=None,
+                      prefix_commit_string=''):
+    '''Method to print the commits from the list of commits'''
+
+    if (repo_name):
+        string_to_print = "In repo {repo_name}:\n\n" \
+            .format(repo_name=repo_name)
+    elif (created_date_timestamp):
+        string_to_print = "{created_date}:\n" \
+            .format(created_date=timestamp_to_formatted_date(created_date_timestamp))
+    string_to_print += reduce(lambda str1, str2: str1 + "\n" + str2,
+                              map(lambda index_str_tuple:
+                                  prefix_commit_string + str(index_str_tuple[0]) + ": " + index_str_tuple[1],
+                                  enumerate(commit_list, start=1))) + "\n"
+    print(string_to_print)

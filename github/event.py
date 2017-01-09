@@ -1,4 +1,6 @@
+import datetime
 import re
+import time
 from functools import reduce
 
 import iso8601
@@ -55,6 +57,15 @@ class Event:
         '''Return the time the event was created'''
         if (CREATED_AT in self.event_dict):
             return iso8601.parse_date(self.event_dict[CREATED_AT]).timestamp()
+        else:
+            raise ValueError("Could not figure out the created_at time from the event object")
+
+    def created_date_timestamp(self):
+        '''Return the timestamp for the date the event was created.
+        This method basically rounds of the timestamp to the date level'''
+        if (CREATED_AT in self.event_dict):
+            dt = iso8601.parse_date(self.event_dict[CREATED_AT])
+            return int(time.mktime(datetime.date(dt.year, dt.month, dt.day).timetuple()))
         else:
             raise ValueError("Could not figure out the created_at time from the event object")
 

@@ -1,13 +1,13 @@
 """Github-Summary.
 
 Usage:
-  main.py [-t lookbackTime]
+  main.py [-t lookbackTime] [-g groupBy]
   main.py (-h | --help)
 
 Options:
   -h --help     Show this screen.
-  -t lookbackTime  lookbackTime with units [default: 7d].
-
+  -t lookbackTime  lookbackTime with units
+  -g groupBy  group commits by repo or repo followed by date or date followed by repo.
 """
 
 from datetime import datetime
@@ -25,6 +25,9 @@ if __name__ == '__main__':
 
     if ('-t' in arguments):
         config_dict[LOOKBACK_TIME] = arguments['-t']
+
+    if ('-g' in arguments):
+        config_dict[GROUPY_BY] = arguments['-g']
 
     if (config_dict[LOOKBACK_TIME]):
         time_unit_map = {

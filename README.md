@@ -9,6 +9,9 @@ Tool to generate (weekly) summary of work done on
 * There are two ways for specifying how much time to look back since the current time when retriving commits:
     * Commandline option - `python3 main.py -t *lookback_time*`. The supported formats are discussed under `lookback_time`[here](README.md#config-parameters)
     * Setting as a config parameter - discussed under `lookback_time`[here](README.md#config-parameters)
+* There are two ways for specifying how to group the commits:
+	* Commandline option - `python3 main.py -g *group_by*`. The supported formats are discussed under `group_by`[here](README.md#config-parameters)
+    * Setting as a config parameter - discussed under `group_by`[here](README.md#config-parameters)
 
 ## Config Parameters
 
@@ -23,6 +26,11 @@ Supported values:
 	* **n**d - commits older than **n** days.
 	* **n**w - commits older than **n** weeks.
 For example, `lookback_time=7d` means commits older than 7 days will not be retrived.
+* `group_by* - How to group the list of commits.
+Supported values:
+	* **r** - group commits by repo.
+	* **rd** - group commits by repo and then by date.
+	* **dr** - group commits by date and then by repo.
 
 ## To change the output format
 
@@ -39,18 +47,24 @@ Everyone in my team has to write a weekly update describing the different tasks 
 In repo github.com/shagunsodhani/citadel:
 
 1: 4fb6f09f36fb05884cd0b352c09b21e4d7f45263 - Added GAN links
-2: 97fdefc7176fa52edc94ee9c57f572f0befd4b24 - Added link for tensorflow debugging
+
+=============================================================================
 
 In repo github.com/shagunsodhani/github-summary:
 
-1: 1323b5e55e95522ed1c556ef8efd9515e6013a08 - Added support for access_tokens
-2: ad46b38a011239309ef6bdcfb9a3208a6a84f576 - Added a parameter in the config to control how much older commits are retrived
-3: be4cda323349f02cccc4effc5ec304dcf745a328 - Added instructions to setup and use. Fixes #1
-4: 5cacfd4570702db3e46932a3e739188842424601 - Make unauthenticated request to github API in case client_id or client_secret is missing
-5: 10d0f11057ec9da7c6df5db039e00caa715cbfe6 - Added demo values to the sample config and added setup script
+1: b8cc12f68c6581d36f21342ba77d48a2f28a5e88 - Not listing messages related to merges and formatted the commit messages to have consistent formatting. Fixes #2
+2: 167d792d4ec707390c13cfafd453cd9d2213c8a2 - Added support for commandline flag for specifying duration. Fixes #4
+3: 208c2bce0e8a7185b17a00bc5936b303231ca703 - Added support for commandline flag for specifying duration. Fixes #3
+4: 3a8934baf1ee2a809bb7b973fe5bd07bac26d0b8 - Improve formatting in README.md
+5: b864f739ffd86285820668eac9af8cbef5856a13 - Added constants in place of strings
+6: 7e052c5d84f6c5ab55e2813dfabeb209c99e3e2e - Added more formats to specify time. Related to #4
+
+=============================================================================
 
 In repo github.com/shagunsodhani/papers-I-read:
 
-1: 63b7cd141ebd95768b94f7ae62866703c8f01091 - Added Open Vocabulary NMT paper
+1: 1a978b4bb793be955edda082bdf6e91a84cf0634 - Added paper on "Addressing the Rare Word Problem in Neural Machine Translation"
+
+=============================================================================
 
 ```
