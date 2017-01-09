@@ -1,11 +1,9 @@
 from functools import reduce
 
-import requests as r
-
 from github.event import Event
 from util.config import parse_config
 from util.constant import *
-from util.helper import timestamp_to_formatted_date
+from util.helper import timestamp_to_formatted_date, get_head_and_reponse
 
 config_dict = parse_config(app_name=GITHUB)
 base_url = config_dict[BASE_URL]
@@ -40,8 +38,8 @@ def get_activity_user(config_dict):
     else:
         endpoint = "{base_url}/users/{username}/events".format(base_url=base_url,
                                                                username=username)
-    head = r.head(url=endpoint, headers=headers)
-    response = r.get(url=endpoint, headers=headers).json()
+    head, response = get_head_and_reponse(endpoint, headers)
+
     while (response):
         for _event in response:
             event = Event(_event)
@@ -55,8 +53,7 @@ def get_activity_user(config_dict):
                 pass
         if (NEXT in head.links):
             endpoint = head.links[NEXT][URL]
-            response = r.get(url=endpoint, headers=headers).json()
-            head = r.head(url=endpoint, headers=headers)
+            head, response = get_head_and_reponse(endpoint, headers)
         else:
             return
 
