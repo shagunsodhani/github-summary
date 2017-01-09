@@ -4,5 +4,5 @@ username = shagunsodhani
 client_id =
 client_secret =
 access_token =
-lookback_time = 6048000
+lookback_time = 7d
 group_by = r

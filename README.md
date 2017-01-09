@@ -32,6 +32,12 @@ Supported values:
 	* **rd** - group commits by repo and then by date.
 	* **dr** - group commits by date and then by repo.
 
+## Multiple Configs
+
+* We can create multiple configs in `config.cfg`.
+* To add a new config block, copy the config block from `config.cfg.sample` and give it a different name.
+* To use this new config, run `python3 main.py -p new_config_name`
+
 ## To change the output format
 
 * Update the `summarise_commits()` method in [`github/activity.py`](github/activity.py)

@@ -1,11 +1,12 @@
 """Github-Summary.
 
 Usage:
-  main.py [-t lookbackTime] [-g groupBy]
+  main.py [-p profile] [-t lookbackTime] [-g groupBy]
   main.py (-h | --help)
 
 Options:
   -h --help     Show this screen.
+  -p profile    Choose which profile to use from config [default: github]
   -t lookbackTime  lookbackTime with units
   -g groupBy  group commits by repo or repo followed by date or date followed by repo.
 """
@@ -20,13 +21,14 @@ from util.constant import *
 
 if __name__ == '__main__':
     arguments = docopt(__doc__)
-    config_dict = parse_config(app_name=GITHUB)
+    appname = arguments['-p']
+    config_dict = parse_config(app_name=appname)
     lookback_time = 604800
 
-    if ('-t' in arguments):
+    if ('-t' in arguments and arguments['-t']):
         config_dict[LOOKBACK_TIME] = arguments['-t']
 
-    if ('-g' in arguments):
+    if ('-g' in arguments and arguments['-g']):
         config_dict[GROUPY_BY] = arguments['-g']
 
     if (config_dict[LOOKBACK_TIME]):
