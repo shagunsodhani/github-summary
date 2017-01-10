@@ -14,9 +14,10 @@ def get_head_and_reponse(endpoint, headers):
     '''Method to get the head and response given an endpoint and headers'''
     try:
         head = r.head(url=endpoint, headers=headers)
-        response = r.get(url=endpoint, headers=headers).json()
-        r.raise_for_status()
-        return head, response
+        head.raise_for_status()
+        response = r.get(url=endpoint, headers=headers)
+        response.raise_for_status()
+        return head, response.json()
 
     except r.exceptions.ConnectionError as e:
         print("Connection Error when accessing url: {url}. Due to a network problem like"
