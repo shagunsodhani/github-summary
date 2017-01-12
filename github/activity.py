@@ -1,15 +1,8 @@
 from functools import reduce
 
 from github.event import Event
-from util.config import parse_config
 from util.constant import *
 from util.helper import timestamp_to_formatted_date, get_head_and_reponse
-
-config_dict = parse_config(app_name=GITHUB)
-base_url = config_dict[BASE_URL]
-headers = {
-    USERAGENT: config_dict[USERNAME]
-}
 
 
 def get_activity_user(config_dict):
@@ -24,6 +17,11 @@ def get_activity_user(config_dict):
     client_id = config_dict[CLIENT_ID]
     client_secret = config_dict[CLIENT_SECRET]
     access_token = config_dict[ACCESS_TOKEN]
+    base_url = config_dict[BASE_URL]
+    headers = {
+        USERAGENT: config_dict[USERNAME]
+    }
+
     if (client_secret and client_id):
         endpoint = "{base_url}/users/{username}/events?client_id={client_id}" \
                    "&client_secret={client_secret}".format(base_url=base_url,
